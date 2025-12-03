@@ -12,31 +12,31 @@ namespace lift
 {
     public partial class Form1 : Form
     {
-        Button[] buttons;
-        Button[] buttons_strelki;
-        Button[] knopki;
+        Button[] buttons; //визуализация этажа
+        Button[] buttons_strelki; //стрелки
+        Button[] knopki; //кнопки
 
-        int oldNomer;
-        int newNomer;
-        bool isMoving;
+        int oldNomer; //старый этаж
+        int newNomer; //новый этаж
+        bool isMoving; //движение правда недвижение лодь
         public Form1()
         {
             InitializeComponent();
-            createButtonPanelEtaz();
+            createButtonPanelEtaz(); //функция создания поля
 
-            oldNomer = 5;
-            newNomer = 0;
-            isMoving = false;
+            oldNomer = 5; //изначальный этаж то есть 1
+            newNomer = 0; //новый
+            isMoving = false; 
         }
 
         private void createButtonPanelEtaz()
         {
-            int x = 6;
-            buttons = new Button[6];
-            buttons_strelki = new Button[10];
-            knopki = new Button[6];
+            int x = 6; //кол чтсел
+            buttons = new Button[6]; //создаем визуализацию
+            buttons_strelki = new Button[10]; //стрелки
+            knopki = new Button[6]; //кнопки
 
-            int strelkaIndex = 0;
+            int strelkaIndex = 0; //счет стрелок
 
             for (int i = 0; i < 6; i++)
             {
@@ -51,7 +51,7 @@ namespace lift
                 x--;
                 etaz.Controls.Add(buttons[i]);
 
-                if (i == 0)
+                if (i == 0) //ПЕРВАЯ СТРЕЛКА
                 {
                     buttons_strelki[strelkaIndex] = new Button();
                     buttons_strelki[strelkaIndex].Size = new Size(25, 20);
@@ -62,7 +62,7 @@ namespace lift
                     etaz.Controls.Add(buttons_strelki[strelkaIndex]);
                     strelkaIndex++;
                 }
-                else if (i == 5)
+                else if (i == 5) //ПОСЛЕДНЯ СТРЕКЛА
                 {
                     buttons_strelki[strelkaIndex] = new Button();
                     buttons_strelki[strelkaIndex].Size = new Size(25, 20);
@@ -73,7 +73,7 @@ namespace lift
                     etaz.Controls.Add(buttons_strelki[strelkaIndex]);
                     strelkaIndex++;
                 }
-                else
+                else //ОСТЛЬАНЫЕ СТРЕЛКИ
                 {
                     buttons_strelki[strelkaIndex] = new Button();
                     buttons_strelki[strelkaIndex].Size = new Size(25, 20);
@@ -95,9 +95,9 @@ namespace lift
                 }
             }
 
-            int[] nashiChisla = { 6, 5, 4, 3, 2, 1 };
+            int[] nashiChisla = { 6, 5, 4, 3, 2, 1 }; //ТЕКСТ ЧИСЕЛ
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++) //В ДВА РЯДА
             {
                 for (int j = 0; j < 2; j++)
                 {
@@ -114,13 +114,13 @@ namespace lift
             }
         }
 
-        private void Vizov_Lift_Verh(object sender, EventArgs e)
+        private void Vizov_Lift_Verh(object sender, EventArgs e) //КНОПКИ РАБОТА
         {
-            Button clickedButton = (Button)sender;
-            int buttonNomer = Convert.ToInt32((string)clickedButton.Tag);
+            Button clickedButton = (Button)sender; //ПОУЛЧАЕМ КАКАЯ КНОПКА
+            int buttonNomer = Convert.ToInt32((string)clickedButton.Tag); //БЕРЕМ ИЗ ЕГО ТЕГА НОМЕР
 
-            Buttons_Etaz_Kakoy(buttonNomer);  
-        }
+            Buttons_Etaz_Kakoy(buttonNomer);  //ВЫЗЫВАЕМ ФУНКЦИЮ
+        } //ПО ИДЕЕ МОЖНО ВСЕ ЭТИ ТРИ КНОПКИ В ОДНУ ЗАПИХНУТЬ, пусть останется для маштабирования
         private void Vizov_Lift_Vniz(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
@@ -137,7 +137,7 @@ namespace lift
             Buttons_Etaz_Kakoy(buttonNomer);         
         }
 
-        private void Buttons_Etaz_Kakoy(int x)
+        private void Buttons_Etaz_Kakoy(int x) //проверка двигается ли лифт, и иницализирование нового этажа
         {
             if (isMoving)
             {
@@ -150,45 +150,45 @@ namespace lift
         }
 
 
-        public async Task MethodAsync()
+        public async Task MethodAsync() //метод рисовки
         {
-            isMoving = true;
-            pictureBox1.Image = Properties.Resources.closeDoor;
-            int step;
-            for (int i = 0; i < 6; i++)
+            isMoving = true; //ЕСли лифт двигается
+            pictureBox1.Image = Properties.Resources.closeDoor; //закрытие двери
+            int step; //движение лифта
+            for (int i = 0; i < 6; i++) //делаем все белым
             {
                 buttons[i].BackColor = Color.White;
             }
 
-            if (oldNomer > newNomer)
+            if (oldNomer > newNomer) //если страый номер больше нового минусуем этажи
             {
-                step = -1;
+                step = -1; //спускаемся вниз
             }
             else
             {
-                step = 1;
+                step = 1; //поднимаемся вверх
             }
 
-            buttons[oldNomer].BackColor = Color.Red;
+            buttons[oldNomer].BackColor = Color.Red; //красим в красный текущий этаж типо движеться
 
-            for (int i = oldNomer; i != newNomer; i += step)
+            for (int i = oldNomer; i != newNomer; i += step)  //цикл для перехода по этажам
             {
-                await Task.Delay(1000);
+                await Task.Delay(1000); //задежрка для красоты
 
-                int etotNomer = i + step;
+                int etotNomer = i + step; //будущий этаж
 
-                buttons[i].BackColor = Color.White;
+                buttons[i].BackColor = Color.White; //красим предыдущий этаж белым
 
-                buttons[etotNomer].BackColor = Color.Red;
+                buttons[etotNomer].BackColor = Color.Red; //красим в красный текущий этаж типо движеться
 
-                oldNomer = etotNomer; 
+                oldNomer = etotNomer;  //делаем старый номер в предудщий
             }
 
-            buttons[newNomer].BackColor = Color.Green;
-            pictureBox1.Image = Properties.Resources.openDoor;
-            oldNomer = newNomer;
+            buttons[newNomer].BackColor = Color.Green; //красим зеленым типо мы приехзалт
+            pictureBox1.Image = Properties.Resources.openDoor; //открываем двеврь
+            oldNomer = newNomer; //новый этаж стал страым
 
-            isMoving = false;
+            isMoving = false; //перестла двигаться
         }
     }
 }
