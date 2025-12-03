@@ -24,7 +24,7 @@ namespace lift
             InitializeComponent();
             createButtonPanelEtaz();
 
-            oldNomer = 0;
+            oldNomer = 5;
             newNomer = 0;
             isMoving = false;
         }
@@ -117,30 +117,22 @@ namespace lift
         private void Vizov_Lift_Verh(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
-
             int buttonNomer = Convert.ToInt32((string)clickedButton.Tag);
 
-            Buttons_Etaz_Kakoy(buttonNomer);
-  
-  
+            Buttons_Etaz_Kakoy(buttonNomer);  
         }
         private void Vizov_Lift_Vniz(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
-
             int buttonNomer = Convert.ToInt32((string)clickedButton.Tag);
     
-            Buttons_Etaz_Kakoy(buttonNomer);
-
-            
+            Buttons_Etaz_Kakoy(buttonNomer);       
         }
 
         private void Lift_Knopki(object sender, EventArgs e)
         {
             Button clickedButton = (Button)sender;
             int buttonNomer = Convert.ToInt32((string)clickedButton.Tag);
-
-            
 
             Buttons_Etaz_Kakoy(buttonNomer);         
         }
@@ -183,13 +175,13 @@ namespace lift
             {
                 await Task.Delay(1000);
 
-                int currentFloor = i + step;
+                int etotNomer = i + step;
 
                 buttons[i].BackColor = Color.White;
 
-                buttons[currentFloor].BackColor = Color.Red;
+                buttons[etotNomer].BackColor = Color.Red;
 
-                oldNomer = currentFloor; 
+                oldNomer = etotNomer; 
             }
 
             buttons[newNomer].BackColor = Color.Green;
